@@ -216,14 +216,14 @@
     },
     {
       "id": "B-06",
-      "name": "B-06",
+      "name": "B-04",
       "parent": "B-00",
       "alive": true,
       "algaeFed": 22,
       "m4Added": 0,
-      "adults": 20,
-      "juv": 14,
-      "neosPop": 8,
+      "adults": 0,
+      "juv": 0,
+      "neosPop": 10,
       "deaths": 0,
       "notes": "Best performer",
       "born": "22.04.2026",
@@ -247,6 +247,20 @@
             {
               "t": "neo",
               "l": "ð¦ 42 neonates born"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "date": "25.05.2026 00:54",
+          "chips": [
+            {
+              "t": "note",
+              "l": "✏ Renamed to B-04"
+            },
+            {
+              "t": "pop",
+              "l": "🔬 Pop 42→10"
             }
           ],
           "note": ""
