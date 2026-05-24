@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Daphnia Lab">
+<meta name="theme-color" content="#0d1117">
+<title>Daphnia Lab</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0d1117;--surf:#161b22;--surf2:#1c2330;--surf3:#21262d;
+  --bd:rgba(255,255,255,0.08);--bd2:rgba(255,255,255,0.15);
+  --teal:#3dd8a4;--tdim:rgba(61,216,164,0.12);--tdim2:rgba(61,216,164,0.22);
+  --amber:#f0a030;--adim:rgba(240,160,48,0.12);
+  --coral:#e8614a;--cdim:rgba(232,97,74,0.10);
+  --blue:#4da8e8;--bdim:rgba(77,168,232,0.10);
+  --purple:#a78bfa;--pdim:rgba(167,139,250,0.10);
+  --tx:#e6edf3;--tx2:#8b949e;--tx3:#484f58;
+  --mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif;
+  --sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font-family:var(--sans)}
+.app{display:flex;flex-direction:column;height:100%;padding-top:var(--sat)}
+
+/* ── TABS ── */
+.tab-bar{background:var(--surf);border-bottom:1px solid var(--bd2);display:flex;flex-shrink:0}
+.tab{flex:1;padding:11px 4px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);cursor:pointer;text-align:center;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.tab.on{color:var(--teal);border-bottom-color:var(--teal)}
+
+/* ── SCREENS ── */
+.screen{display:none;flex:1;overflow:hidden;flex-direction:column}
+.screen.on{display:flex}
+
+/* ── HUD ── */
+.hud{background:var(--surf);border-bottom:1px solid var(--bd2);padding:7px 10px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;flex-shrink:0}
+.hud-title{font-family:var(--mono);font-size:12px;color:var(--teal);letter-spacing:.13em;text-transform:uppercase;white-space:nowrap}
+.stock-pill{display:flex;align-items:center;gap:7px;border:1px solid var(--bd2);border-radius:7px;padding:4px 9px;cursor:pointer;transition:border-color .2s}
+.stock-pill:active{opacity:.75}
+.stock-pill.algae{background:var(--tdim);border-color:rgba(61,216,164,.3)}
+.stock-pill.m4{background:var(--bdim);border-color:rgba(77,168,232,.3)}
+.pill-ico{font-size:18px;line-height:1;flex-shrink:0}
+.pill-body{min-width:0}
+.pill-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-family:var(--mono)}
+.stock-pill.algae .pill-lbl{color:var(--teal)}
+.stock-pill.m4 .pill-lbl{color:var(--blue)}
+.pill-val{font-size:17px;font-weight:700;font-family:var(--mono)}
+.stock-pill.algae .pill-val{color:var(--teal)}
+.stock-pill.m4 .pill-val{color:var(--blue)}
+.pill-unit{font-size:11px;font-family:var(--mono);margin-left:2px}
+.stock-pill.algae .pill-unit{color:var(--teal)}
+.stock-pill.m4 .pill-unit{color:var(--blue)}
+.pill-bar{height:2px;border-radius:1px;overflow:hidden;margin-top:3px}
+.stock-pill.algae .pill-bar{background:rgba(61,216,164,.15)}
+.stock-pill.m4 .pill-bar{background:rgba(77,168,232,.15)}
+.pill-fill{height:100%;border-radius:1px;transition:width .4s}
+.stock-pill.algae .pill-fill{background:var(--teal)}
+.stock-pill.m4 .pill-fill{background:var(--blue)}
+.hud-stat{display:flex;align-items:center;gap:5px;background:var(--surf2);border:1px solid var(--bd);border-radius:6px;padding:4px 8px}
+.hud-ico{font-size:16px;line-height:1}
+.hud-body{display:flex;flex-direction:column;gap:1px}
+.hud-lbl{font-size:10px;color:var(--tx2);text-transform:uppercase;letter-spacing:.09em;font-family:var(--mono)}
+.hud-val{font-size:14px;font-weight:500;color:var(--tx);font-family:var(--mono)}
+.hud-sp{flex:1}
+.add-btn{background:var(--tdim);border:1px solid var(--teal);color:var(--teal);font-family:var(--mono);font-size:12px;padding:7px 12px;border-radius:5px;cursor:pointer;white-space:nowrap;flex-shrink:0}
+
+/* ── BEAKER LAYOUT ── */
+.bk-layout{display:flex;flex:1;overflow:hidden}
+.sidebar{width:150px;min-width:150px;background:var(--surf);border-right:1px solid var(--bd2);padding:10px 8px;overflow-y:auto;flex-shrink:0}
+@media(max-width:480px){.sidebar{width:110px;min-width:110px}}
+.side-lbl{font-family:var(--mono);font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.13em;margin-bottom:9px}
+.l-node{display:flex;align-items:center;gap:4px;padding:4px 4px;border-radius:5px;cursor:pointer;margin-bottom:2px;position:relative;transition:background .15s}
+.l-node:active{background:var(--surf2)}
+.l-node.child{margin-left:13px}
+.l-conn{position:absolute;left:6px;top:-6px;width:1px;height:14px;background:var(--bd2)}
+.l-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.l-dot.on{background:var(--teal);box-shadow:0 0 4px var(--teal)}
+.l-dot.off{background:var(--tx3)}
+.l-name{font-size:12px;font-family:var(--mono);color:var(--tx2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70px}
+.l-node.sel .l-name{color:var(--teal)}
+.l-node.dead .l-name{text-decoration:line-through;color:var(--tx3)}
+.l-date{font-size:10px;color:var(--tx3);margin-left:auto;white-space:nowrap}
+
+.grid-area{flex:1;overflow-y:auto;padding:10px;-webkit-overflow-scrolling:touch}
+.bk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:9px}
+
+/* ── CARD ── */
+.card{background:var(--surf);border:1px solid var(--bd);border-radius:10px;padding:9px 9px 7px;cursor:pointer;transition:border-color .2s;-webkit-user-select:none;user-select:none}
+.card:active{opacity:.8}
+.card.sel{border-color:var(--teal)}
+.card.dead{opacity:.4}
+.card-hdr{display:flex;align-items:center;gap:4px;margin-bottom:6px}
+.card-id{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--teal);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:80px}
+.card.dead .card-id{color:var(--tx3)}
+.card-parent{font-size:10px;color:var(--tx3);font-family:var(--mono);white-space:nowrap}
+.sdot{width:5px;height:5px;border-radius:50%;background:var(--teal);box-shadow:0 0 4px var(--teal);margin-left:auto;flex-shrink:0}
+.sdot.off{background:var(--coral);box-shadow:none}
+.bk-wrap{display:flex;justify-content:center;margin-bottom:6px}
+.mbar-row{display:flex;align-items:center;gap:3px;margin-bottom:2px}
+.mbar-lbl{font-size:10px;color:var(--tx3);font-family:var(--mono);text-transform:uppercase;width:24px;flex-shrink:0}
+.mbar-track{flex:1;height:2px;background:var(--bd2);border-radius:1px;overflow:hidden}
+.mbar-fill{height:100%;border-radius:1px;transition:width .3s}
+.mbar-val{font-size:10px;font-family:var(--mono);color:var(--tx2);min-width:30px;text-align:right}
+.card-pop{font-size:10px;color:var(--amber);font-family:var(--mono);margin-top:3px;line-height:1.5}
+.card-note{font-size:10px;color:var(--tx3);font-family:var(--mono);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.warn-lbl{font-size:10px;color:var(--coral);font-family:var(--mono);margin-top:2px}
+
+/* ── OVERLAYS ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:100;align-items:flex-end;justify-content:center;padding-bottom:var(--sab)}
+@media(min-width:580px){.overlay{align-items:center}}
+.overlay.on{display:flex}
+.sheet{background:var(--surf);border:1px solid var(--bd2);border-radius:16px 16px 0 0;padding:16px 14px;width:100%;max-width:500px;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+@media(min-width:580px){.sheet{border-radius:14px;max-height:88vh}}
+.sheet-hdr{display:flex;align-items:center;margin-bottom:13px}
+.sheet-title{font-family:var(--mono);font-size:14px;color:var(--teal);flex:1}
+.sheet-close{background:none;border:none;color:var(--tx2);cursor:pointer;font-size:17px;line-height:1;padding:0 3px}
+.divider{border:none;border-top:1px solid var(--bd);margin:11px 0}
+.sec-lbl{font-family:var(--mono);font-size:11px;color:var(--tx2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+
+/* forms */
+.fld{margin-bottom:10px}
+.fld label{display:block;font-size:11px;color:var(--tx2);text-transform:uppercase;letter-spacing:.1em;font-family:var(--mono);margin-bottom:4px}
+.fld-row{display:flex;align-items:center;gap:8px}
+.fld-v{font-family:var(--mono);font-size:13px;color:var(--teal);min-width:46px;text-align:right}
+.fld-v.blue{color:var(--blue)}
+input[type=number],input[type=text]{background:var(--surf2);border:1px solid var(--bd2);color:var(--tx);font-family:var(--mono);font-size:14px;padding:8px 10px;border-radius:6px;-webkit-appearance:none;outline:none}
+input[type=number]{width:88px}
+input[type=text]{width:100%}
+input:focus{border-color:var(--teal)}
+input[type=datetime-local]{background:var(--surf2);border:1px solid var(--bd2);color:var(--tx);font-family:var(--mono);font-size:13px;padding:7px 10px;border-radius:6px;-webkit-appearance:none;outline:none;width:100%;color-scheme:dark}
+input[type=datetime-local]:focus{border-color:var(--teal)}
+.retro-box{background:rgba(167,139,250,0.07);border:1px solid rgba(167,139,250,0.22);border-radius:7px;padding:8px 11px;margin-bottom:11px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.retro-ico{font-size:13px;flex-shrink:0}
+.retro-lbl{font-family:var(--mono);font-size:11px;color:var(--purple);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.retro-inner{flex:1;min-width:180px}
+
+.feed-box{background:var(--tdim);border:1px solid rgba(61,216,164,.22);border-radius:8px;padding:10px 11px;margin-bottom:11px}
+.feed-box-title{font-family:var(--mono);font-size:11px;color:var(--teal);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.feed-preview{font-size:11px;color:rgba(61,216,164,.65);font-family:var(--mono);margin-top:5px}
+.feed-warn{font-size:8px;color:var(--coral);font-family:var(--mono);margin-top:3px;display:none}
+
+.m4-feed-box{background:var(--bdim);border:1px solid rgba(77,168,232,.22);border-radius:8px;padding:10px 11px;margin-bottom:11px}
+.m4-feed-box-title{font-family:var(--mono);font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.m4-preview{font-size:11px;color:rgba(77,168,232,.65);font-family:var(--mono);margin-top:5px}
+
+/* population grid */
+.pop-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:6px}
+.pop-field{background:var(--surf2);border:1px solid var(--bd);border-radius:7px;padding:7px 8px}
+.pop-field label{font-size:11px;color:var(--tx2);text-transform:uppercase;letter-spacing:.09em;font-family:var(--mono);display:block;margin-bottom:4px}
+.pop-field input{background:none;border:none;color:var(--tx);font-family:var(--mono);font-size:17px;width:100%;outline:none;padding:0}
+.pop-total{font-family:var(--mono);font-size:11px;color:var(--amber);text-align:right;margin-top:2px}
+
+/* deaths */
+.deaths-row{display:flex;align-items:center;gap:8px;margin-top:4px}
+.deaths-lbl{font-size:11px;color:var(--coral);font-family:var(--mono);white-space:nowrap}
+
+/* neo log */
+.log-scroll{max-height:64px;overflow-y:auto;margin-top:5px}
+.log-line{font-family:var(--mono);font-size:11px;color:var(--tx3);display:block;padding:1px 0}
+
+/* history */
+.hist-entry{padding:6px 0;border-bottom:1px solid var(--bd)}
+.hist-entry:last-child{border-bottom:none}
+.hist-date{font-family:var(--mono);font-size:10px;color:var(--tx3);margin-bottom:3px}
+.chips{display:flex;gap:4px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:4px;white-space:nowrap}
+.chip.algae{background:rgba(61,216,164,.1);color:var(--teal);border:1px solid rgba(61,216,164,.2)}
+.chip.m4{background:rgba(77,168,232,.1);color:var(--blue);border:1px solid rgba(77,168,232,.2)}
+.chip.neo{background:rgba(240,160,48,.1);color:var(--amber);border:1px solid rgba(240,160,48,.2)}
+.chip.death{background:rgba(232,97,74,.1);color:var(--coral);border:1px solid rgba(232,97,74,.2)}
+.chip.pop{background:rgba(167,139,250,.1);color:var(--purple);border:1px solid rgba(167,139,250,.2)}
+.chip.note{background:var(--surf2);color:var(--tx2);border:1px solid var(--bd)}
+.hist-note{font-size:10px;color:var(--tx3);font-family:var(--mono);margin-top:2px;font-style:italic}
+
+/* actions */
+.acts{display:flex;gap:6px;margin-top:13px;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:12px;padding:9px 13px;border-radius:6px;cursor:pointer;letter-spacing:.04em;border:1px solid transparent;transition:opacity .15s;white-space:nowrap}
+.btn:active{opacity:.65}
+.btn-t{background:var(--tdim);border-color:var(--teal);color:var(--teal)}
+.btn-a{background:var(--adim);border-color:var(--amber);color:var(--amber)}
+.btn-c{background:var(--cdim);border-color:var(--coral);color:var(--coral)}
+.btn-g{background:none;border-color:var(--bd2);color:var(--tx2)}
+.btn-b{background:var(--bdim);border-color:var(--blue);color:var(--blue)}
+.btn-p{background:var(--pdim);border-color:var(--purple);color:var(--purple)}
+
+/* stock history */
+.sh-entry{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:11px;color:var(--tx3);padding:4px 0;border-bottom:1px solid var(--bd)}
+.sh-entry:last-child{border-bottom:none}
+.sh-pos{color:var(--teal)}
+.sh-neg{color:var(--coral)}
+
+/* ── LAB SCREEN ── */
+.lab-area{flex:1;overflow-y:auto;padding:12px;-webkit-overflow-scrolling:touch}
+.lab-section{margin-bottom:20px}
+.lab-section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.lab-section-title{font-family:var(--mono);font-size:12px;color:var(--tx2);text-transform:uppercase;letter-spacing:.12em}
+.lab-add-btn{background:none;border:1px solid var(--bd2);color:var(--tx2);font-family:var(--mono);font-size:11px;padding:5px 10px;border-radius:4px;cursor:pointer}
+.sol-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.sol-card{background:var(--surf);border:1px solid var(--bd);border-radius:8px;padding:9px 10px;cursor:pointer;transition:border-color .2s}
+.sol-card:active{opacity:.75}
+.sol-card.algae-sol{border-left:2px solid var(--teal)}
+.sol-card.m4-sol{border-left:2px solid var(--blue)}
+.sol-name{font-family:var(--mono);font-size:12px;color:var(--tx);margin-bottom:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sol-bar-row{display:flex;align-items:center;gap:5px}
+.sol-track{flex:1;height:3px;background:var(--bd2);border-radius:1px;overflow:hidden}
+.sol-fill{height:100%;border-radius:1px}
+.sol-val{font-size:11px;font-family:var(--mono);min-width:40px;text-align:right}
+.sol-needed{font-size:10px;color:var(--tx3);font-family:var(--mono);margin-top:3px}
+.sol-warn{font-size:10px;color:var(--coral);font-family:var(--mono);margin-top:2px}
+
+.make-batch-box{background:var(--surf2);border:1px solid var(--bd2);border-radius:8px;padding:10px 12px;margin-bottom:12px}
+.make-batch-title{font-family:var(--mono);font-size:11px;color:var(--tx2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.batch-preview{font-size:11px;font-family:var(--mono);color:var(--tx3);margin-bottom:8px;line-height:1.7}
+.batch-ok{color:var(--teal)}
+.batch-low{color:var(--coral)}
+
+/* ── FLOW btn ── */
+.flow-btn{position:fixed;bottom:calc(12px + var(--sab));right:12px;background:var(--surf);border:1px solid var(--teal);color:var(--teal);font-family:var(--mono);font-size:12px;padding:9px 14px;border-radius:6px;cursor:pointer;z-index:50;letter-spacing:.06em}
+.io-btn{position:fixed;bottom:calc(12px + var(--sab));left:12px;background:var(--surf);border:1px solid var(--bd2);color:var(--tx2);font-family:var(--mono);font-size:12px;padding:9px 14px;border-radius:6px;cursor:pointer;z-index:50;letter-spacing:.06em}
+
+/* flow panel */
+.flow-panel{background:var(--surf);border:1px solid var(--bd2);border-radius:16px 16px 0 0;padding:16px 14px;width:100%;max-width:640px;max-height:92vh;overflow-y:auto}
+@media(min-width:580px){.flow-panel{border-radius:14px}}
+.flow-panel h3{font-family:var(--mono);font-size:13px;color:var(--teal);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.flow-close{margin-left:auto;background:none;border:none;color:var(--tx2);cursor:pointer;font-size:17px}
+.flow-hint{font-size:10px;color:var(--tx3);font-family:var(--mono);margin-top:7px}
+
+/* sol edit sheet */
+.sol-sheet{background:var(--surf);border:1px solid var(--bd2);border-radius:16px 16px 0 0;padding:16px 14px;width:100%;max-width:420px;max-height:85vh;overflow-y:auto}
+@media(min-width:580px){.sol-sheet{border-radius:14px}}
+
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- TAB BAR -->
+  <div class="tab-bar">
+    <div class="tab on" id="tab-beakers" onclick="switchTab('beakers')">🔬 Beakers</div>
+    <div class="tab" id="tab-lab" onclick="switchTab('lab')">🧪 Lab solutions</div>
+  </div>
+
+  <!-- ── BEAKERS SCREEN ── -->
+  <div class="screen on" id="screen-beakers">
+    <div class="hud">
+      <span class="hud-title">Daphnia</span>
+      <div class="stock-pill algae" onclick="openStockSheet('algae')">
+        <span class="pill-ico">🌿</span>
+        <div class="pill-body">
+          <div class="pill-lbl">Algae stock</div>
+          <div><span class="pill-val" id="h-algae-val">—</span><span class="pill-unit">mL</span></div>
+          <div class="pill-bar"><div class="pill-fill" id="h-algae-bar"></div></div>
+        </div>
+      </div>
+      <div class="stock-pill m4" onclick="openStockSheet('m4')">
+        <span class="pill-ico">💧</span>
+        <div class="pill-body">
+          <div class="pill-lbl">M4 stock</div>
+          <div><span class="pill-val" id="h-m4-val">—</span><span class="pill-unit">mL</span></div>
+          <div class="pill-bar"><div class="pill-fill" id="h-m4-bar"></div></div>
+        </div>
+      </div>
+      <div class="hud-stat">
+        <span class="hud-ico">🦐</span>
+        <div class="hud-body">
+          <span class="hud-lbl">Total daphnia</span>
+          <span class="hud-val" id="h-pop">—</span>
+        </div>
+      </div>
+      <div class="hud-sp"></div>
+      <span id="sync-status" style="font-family:var(--mono);font-size:11px;color:var(--teal)">🔄 syncing…</span>
+      <button class="add-btn" onclick="addBeaker()">+ New</button>
+    </div>
+    <div class="bk-layout">
+      <div class="sidebar"><div class="side-lbl">Lineage</div><div id="tree"></div></div>
+      <div class="grid-area"><div class="bk-grid" id="grid"></div></div>
+    </div>
+  </div>
+
+  <!-- ── LAB SCREEN ── -->
+  <div class="screen" id="screen-lab">
+    <div class="lab-area">
+
+      <!-- Algae solutions -->
+      <div class="lab-section">
+        <div class="lab-section-hdr">
+          <span class="lab-section-title">🌿 Algae solutions (4)</span>
+          <button class="lab-add-btn" onclick="openSolEdit('algae',null)">+ Add</button>
+        </div>
+        <div class="make-batch-box" id="algae-batch-box"></div>
+        <div class="sol-grid" id="algae-sol-grid"></div>
+      </div>
+
+      <!-- M4 solutions -->
+      <div class="lab-section">
+        <div class="lab-section-hdr">
+          <span class="lab-section-title">💧 M4 solutions (23)</span>
+          <button class="lab-add-btn" onclick="openSolEdit('m4',null)">+ Add</button>
+        </div>
+        <div class="make-batch-box" id="m4-batch-box"></div>
+        <div class="sol-grid" id="m4-sol-grid"></div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- end .app -->
+
+<!-- ── BEAKER EDIT SHEET ── -->
+<div class="overlay" id="ov-edit">
+<div class="sheet">
+  <div class="sheet-hdr">
+    <span class="sheet-title" id="e-title">Beaker</span>
+    <button class="sheet-close" onclick="closeEdit()">✕</button>
+  </div>
+
+  <!-- Retroactive date -->
+  <div class="retro-box">
+    <span class="retro-ico">🕐</span>
+    <div class="retro-inner">
+      <div class="retro-lbl">Log date &amp; time</div>
+      <input type="datetime-local" id="e-datetime">
+    </div>
+  </div>
+
+  <!-- Name -->
+  <div class="fld">
+    <label>Name / ID</label>
+    <input type="text" id="e-name" placeholder="e.g. B-01 or 'Control A'">
+  </div>
+
+  <!-- Algae fed -->
+  <div class="feed-box">
+    <div class="feed-box-title">🌿 Algae fed this session (mL)</div>
+    <div class="fld-row">
+      <input type="number" id="e-algae" min="0" step="0.5" placeholder="0" style="flex:1" oninput="updateFeedPreview()">
+      <span class="fld-v">mL</span>
+    </div>
+    <div class="feed-preview" id="e-algae-preview"></div>
+  </div>
+
+  <!-- M4 -->
+  <div class="m4-feed-box">
+    <div class="m4-feed-box-title">💧 M4 added this session (mL)</div>
+    <div class="fld-row">
+      <input type="number" id="e-m4" min="0" step="5" placeholder="0" style="flex:1" oninput="updateFeedPreview()">
+      <span class="fld-v blue">mL</span>
+    </div>
+    <div class="m4-preview" id="e-m4-preview"></div>
+  </div>
+
+  <!-- Population -->
+  <hr class="divider">
+  <div class="sec-lbl">🔬 Current population</div>
+  <div class="pop-grid">
+    <div class="pop-field">
+      <label>Adults</label>
+      <input type="number" id="e-adults" min="0" placeholder="0" oninput="updatePopTotal()">
+    </div>
+    <div class="pop-field">
+      <label>Juveniles</label>
+      <input type="number" id="e-juv" min="0" placeholder="0" oninput="updatePopTotal()">
+    </div>
+    <div class="pop-field">
+      <label>Neonates</label>
+      <input type="number" id="e-neo-pop" min="0" placeholder="0" oninput="updatePopTotal()">
+    </div>
+  </div>
+  <div class="pop-total" id="e-pop-total"></div>
+
+  <!-- Deaths -->
+  <div class="deaths-row">
+    <span class="deaths-lbl">💀 Deaths this session:</span>
+    <input type="number" id="e-deaths" min="0" placeholder="0" style="width:70px">
+  </div>
+
+  <!-- Notes -->
+  <div class="fld" style="margin-top:10px">
+    <label>Notes</label>
+    <input type="text" id="e-notes" placeholder="e.g. turbid, active…">
+  </div>
+
+  <!-- Neonates born log -->
+  <hr class="divider">
+  <div class="sec-lbl">🦐 Log neonates born (separate count)</div>
+  <div class="retro-box" style="margin-bottom:8px">
+    <span class="retro-ico">🕐</span>
+    <div class="retro-inner">
+      <div class="retro-lbl">Entry date</div>
+      <input type="datetime-local" id="e-neo-datetime">
+    </div>
+  </div>
+  <div class="fld-row">
+    <input type="number" id="e-neo-born" min="0" placeholder="Count" style="flex:1">
+    <button class="btn btn-a" onclick="logNeoBorn()">Log batch</button>
+  </div>
+  <div class="log-scroll" id="e-neo-log"></div>
+
+  <!-- History -->
+  <hr class="divider">
+  <div class="sec-lbl">📋 History</div>
+  <div id="e-hist"></div>
+
+  <div class="acts">
+    <button class="btn btn-t" onclick="saveEdit()">Save</button>
+    <button class="btn btn-a" onclick="spawnChild()">→ Child beaker</button>
+    <button class="btn btn-c" id="e-terminate-btn" onclick="toggleTerminate()">Terminate</button>
+    <button class="btn btn-g" onclick="closeEdit()">Cancel</button>
+    <button class="btn btn-c" style="opacity:.55" onclick="deleteBeaker()">🗑 Delete</button>
+  </div>
+</div>
+</div>
+
+<!-- ── STOCK SHEET (algae & M4) ── -->
+<div class="overlay" id="ov-stock">
+<div class="sheet">
+  <div class="sheet-hdr">
+    <span class="sheet-title" id="st-title">Stock</span>
+    <button class="sheet-close" onclick="closeStock()">✕</button>
+  </div>
+  <div class="fld">
+    <label id="st-cur-lbl">Current stock (mL)</label>
+    <div class="fld-row">
+      <input type="number" id="st-val" min="0" step="5" placeholder="0" style="flex:1">
+      <span class="fld-v">mL</span>
+    </div>
+  </div>
+  <div class="fld">
+    <label>Max capacity (mL)</label>
+    <div class="fld-row">
+      <input type="number" id="st-max" min="100" step="50" placeholder="1000" style="flex:1">
+      <span class="fld-v">mL</span>
+    </div>
+  </div>
+  <div class="fld">
+    <label>Note</label>
+    <input type="text" id="st-note" placeholder="e.g. new batch made">
+  </div>
+  <div class="retro-box">
+    <span class="retro-ico">🕐</span>
+    <div class="retro-inner">
+      <div class="retro-lbl">Log date &amp; time</div>
+      <input type="datetime-local" id="st-datetime">
+    </div>
+  </div>
+  <div class="acts">
+    <button class="btn btn-t" onclick="saveStock()">Save</button>
+    <button class="btn btn-g" onclick="closeStock()">Cancel</button>
+  </div>
+  <hr class="divider">
+  <div class="sec-lbl">History</div>
+  <div id="st-hist"></div>
+</div>
+</div>
+
+<!-- ── SOLUTION EDIT SHEET ── -->
+<div class="overlay" id="ov-sol">
+<div class="sol-sheet">
+  <div class="sheet-hdr">
+    <span class="sheet-title" id="sol-title">Solution</span>
+    <button class="sheet-close" onclick="closeSolEdit()">✕</button>
+  </div>
+  <div class="fld">
+    <label>Solution name</label>
+    <input type="text" id="sol-name" placeholder="e.g. NaNO3, CaCl2…">
+  </div>
+  <div class="fld">
+    <label>Current stock (mL)</label>
+    <div class="fld-row">
+      <input type="number" id="sol-stock" min="0" step="5" placeholder="0" style="flex:1">
+      <span class="fld-v">mL</span>
+    </div>
+  </div>
+  <div class="fld">
+    <label>Max capacity (mL)</label>
+    <div class="fld-row">
+      <input type="number" id="sol-max" min="10" step="10" placeholder="500" style="flex:1">
+      <span class="fld-v">mL</span>
+    </div>
+  </div>
+  <div class="fld">
+    <label id="sol-needed-lbl">Amount needed per batch (mL)</label>
+    <div class="fld-row">
+      <input type="number" id="sol-needed" min="0" step="0.5" placeholder="0" style="flex:1">
+      <span class="fld-v">mL</span>
+    </div>
+  </div>
+  <div class="acts">
+    <button class="btn btn-t" onclick="saveSolEdit()">Save</button>
+    <button class="btn btn-c" id="sol-del-btn" onclick="deleteSol()">Delete</button>
+    <button class="btn btn-g" onclick="closeSolEdit()">Cancel</button>
+  </div>
+</div>
+</div>
+
+<!-- ── LINEAGE FLOW SHEET ── -->
+<div class="overlay" id="ov-flow">
+<div class="flow-panel">
+  <h3>Lineage flow <button class="flow-close" onclick="document.getElementById('ov-flow').classList.remove('on')">✕</button></h3>
+  <div id="flow-svg"></div>
+  <p class="flow-hint">Line thickness = M4 · Green = alive · Gray = terminated</p>
+</div>
+</div>
+
+<!-- ── IO SHEET ── -->
+<div class="overlay" id="ov-io">
+<div class="sheet">
+  <div class="sheet-hdr">
+    <span class="sheet-title">Import / Export</span>
+    <button class="sheet-close" onclick="document.getElementById('ov-io').classList.remove('on')">✕</button>
+  </div>
+  <p style="font-size:11px;color:var(--tx2);margin-bottom:14px;line-height:1.6">Export saves all your data as a JSON file. To transfer to another device, open the app and use Import.</p>
+  <div class="acts">
+    <button class="btn btn-t" onclick="exportData()">↓ Export JSON</button>
+    <button class="btn btn-b" onclick="document.getElementById('imp-input').click()">↑ Import JSON</button>
+  </div>
+  <input type="file" id="imp-input" accept=".json" style="display:none" onchange="importData(event)">
+</div>
+</div>
+
+<button class="flow-btn" onclick="openFlow()">⬡ Flow</button>
+<button class="io-btn" onclick="document.getElementById('ov-io').classList.add('on')">⇅ Data</button>
+
+<script>
+// ════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════
+const TS = () => new Date().toLocaleString('fr-CH',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+
+// Parse a datetime-local input value into display string; fall back to now
+function tsFrom(inputId){
+  const v=document.getElementById(inputId)?.value;
+  if(!v)return TS();
+  const d=new Date(v);
+  if(isNaN(d))return TS();
+  return d.toLocaleString('fr-CH',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+
+// Set a datetime-local input to now
+function setNow(inputId){
+  const el=document.getElementById(inputId);
+  if(!el)return;
+  const now=new Date();
+  // datetime-local needs "YYYY-MM-DDTHH:MM"
+  const pad=n=>String(n).padStart(2,'0');
+  el.value=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+}
+const M4_MAX_DEFAULT = 5000;
+
+let S = {
+  algaeStock: 500, algaeMax: 1000,
+  algaeHistory: [{date:'01.05.2026 · 08:00', delta:500, note:'Initial stock', bal:500}],
+  m4Stock: 2000, m4Max: 5000,
+  m4History: [{date:'01.05.2026 · 08:00', delta:2000, note:'Initial M4', bal:2000}],
+  beakers: [
+    {id:'B-00',name:'B-00',parent:null,alive:false,algaeFed:0,m4Added:0,adults:0,juv:0,neosPop:0,deaths:0,notes:'Original stock',born:'01.04.2026',neoLog:[],history:[]},
+    {id:'B-01',name:'B-01',parent:'B-00',alive:true,algaeFed:18,m4Added:0,adults:12,juv:8,neosPop:4,deaths:0,notes:'',born:'10.04.2026',neoLog:[],history:[{date:'10.04.2026 · 09:00',chips:[{t:'note',l:'Created from B-00'}],note:''}]},
+    {id:'B-02',name:'B-02',parent:'B-00',alive:true,algaeFed:11,m4Added:0,adults:9,juv:5,neosPop:2,deaths:1,notes:'Slightly turbid',born:'12.04.2026',neoLog:['20.04.2026 · 17:32 — 18 neonates born'],history:[{date:'12.04.2026 · 09:00',chips:[{t:'note',l:'Created from B-00'}],note:''},{date:'20.04.2026 · 17:32',chips:[{t:'neo',l:'🦐 18 neonates born'}],note:''}]},
+    {id:'B-03',name:'B-03',parent:'B-00',alive:true,algaeFed:20,m4Added:0,adults:18,juv:10,neosPop:6,deaths:0,notes:'Very active',born:'15.04.2026',neoLog:[],history:[{date:'15.04.2026 · 08:00',chips:[{t:'note',l:'Created from B-00'}],note:''}]},
+    {id:'B-04',name:'B-04',parent:'B-00',alive:true,algaeFed:2,m4Added:0,adults:5,juv:2,neosPop:0,deaths:3,notes:'',born:'18.04.2026',neoLog:[],history:[{date:'18.04.2026 · 08:00',chips:[{t:'note',l:'Created from B-00'}],note:''}]},
+    {id:'B-05',name:'B-05',parent:'B-00',alive:true,algaeFed:13,m4Added:0,adults:11,juv:6,neosPop:3,deaths:0,notes:'',born:'20.04.2026',neoLog:[],history:[{date:'20.04.2026 · 08:00',chips:[{t:'note',l:'Created from B-00'}],note:''}]},
+    {id:'B-06',name:'B-06',parent:'B-00',alive:true,algaeFed:22,m4Added:0,adults:20,juv:14,neosPop:8,deaths:0,notes:'Best performer',born:'22.04.2026',neoLog:['10.05.2026 · 11:00 — 42 neonates born'],history:[{date:'22.04.2026 · 08:00',chips:[{t:'note',l:'Created from B-00'}],note:''},{date:'10.05.2026 · 11:00',chips:[{t:'neo',l:'🦐 42 neonates born'}],note:''}]},
+  ],
+  // Lab solutions
+  algaeSols: [
+    {id:'as1',name:'BG-11 concentrate',stock:450,max:500,needed:10},
+    {id:'as2',name:'Trace elements',stock:190,max:200,needed:2},
+    {id:'as3',name:'Vitamin B12',stock:95,max:100,needed:1},
+    {id:'as4',name:'Fe-EDTA',stock:380,max:400,needed:5},
+  ],
+  m4Sols: [
+    {id:'m4s1',name:'CaCl₂·2H₂O',stock:900,max:1000,needed:18},
+    {id:'m4s2',name:'MgSO₄·7H₂O',stock:880,max:1000,needed:12},
+    {id:'m4s3',name:'NaHCO₃',stock:750,max:1000,needed:8},
+    {id:'m4s4',name:'KCl',stock:950,max:1000,needed:3},
+    {id:'m4s5',name:'Na₂SiO₃',stock:600,max:1000,needed:5},
+    {id:'m4s6',name:'NaNO₃',stock:850,max:1000,needed:10},
+    {id:'m4s7',name:'KH₂PO₄',stock:700,max:1000,needed:4},
+    {id:'m4s8',name:'FeCl₃·6H₂O',stock:480,max:500,needed:2},
+    {id:'m4s9',name:'MnCl₂·4H₂O',stock:490,max:500,needed:1},
+    {id:'m4s10',name:'ZnCl₂',stock:195,max:200,needed:0.5},
+    {id:'m4s11',name:'CoCl₂·6H₂O',stock:198,max:200,needed:0.5},
+    {id:'m4s12',name:'CuCl₂·2H₂O',stock:197,max:200,needed:0.5},
+    {id:'m4s13',name:'Na₂MoO₄',stock:199,max:200,needed:0.5},
+    {id:'m4s14',name:'H₃BO₃',stock:490,max:500,needed:2},
+    {id:'m4s15',name:'Na₂EDTA',stock:480,max:500,needed:3},
+    {id:'m4s16',name:'Thiamine HCl',stock:95,max:100,needed:0.5},
+    {id:'m4s17',name:'Cyanocobalamin',stock:48,max:50,needed:0.2},
+    {id:'m4s18',name:'Biotin',stock:49,max:50,needed:0.1},
+    {id:'m4s19',name:'Inositol',stock:190,max:200,needed:1},
+    {id:'m4s20',name:'Nicotinamide',stock:185,max:200,needed:1},
+    {id:'m4s21',name:'Pantothenate',stock:188,max:200,needed:1},
+    {id:'m4s22',name:'Pyridoxine',stock:192,max:200,needed:0.5},
+    {id:'m4s23',name:'Riboflavin',stock:193,max:200,needed:0.5},
+  ]
+};
+
+let editId = null;
+let stockMode = null; // 'algae' | 'm4'
+let solMode = null;   // 'algae' | 'm4'
+let solEditId = null;
+
+// ── GITHUB SYNC ──
+const GH_TOKEN = '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';
+const GH_REPO  = 'marie-df/daphnia-lab';
+const GH_FILE  = 'daphnia_data.json';
+const GH_BRANCH = 'data';
+const GH_API   = 'https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_FILE+'?ref='+GH_BRANCH;
+let ghSha = null; // current file SHA, needed for updates
+let syncTimer = null;
+let syncPending = false;
+
+function setSyncStatus(s){ // 'synced' | 'syncing' | 'offline' | 'error'
+  const el = document.getElementById('sync-status');
+  if(!el) return;
+  const map = {synced:'🟢 synced', syncing:'🔄 syncing…', offline:'🟡 offline', error:'🔴 sync error'};
+  el.textContent = map[s]||s;
+  el.style.color = s==='synced'?'var(--teal)':s==='syncing'?'var(--amber)':s==='offline'?'var(--amber)':'var(--coral)';
+}
+
+async function ghLoad(){
+  try {
+    setSyncStatus('syncing');
+    const r = await fetch(GH_API, {headers:{'Authorization':'token '+GH_TOKEN,'Accept':'application/vnd.github.v3+json'}});
+    if(r.status===404){ setSyncStatus('synced'); return false; } // file doesn't exist yet, fresh start
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const j = await r.json();
+    ghSha = j.sha;
+    const data = JSON.parse(atob(j.content.replace(/\n/g,'')));
+    Object.assign(S, data);
+    localStorage.setItem('daphnia_v3', JSON.stringify(S));
+    setSyncStatus('synced');
+    return true;
+  } catch(e) {
+    console.warn('ghLoad failed:', e);
+    setSyncStatus('offline');
+    return false;
+  }
+}
+
+async function ghPush(){
+  try {
+    setSyncStatus('syncing');
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(S,null,2))));
+    const body = {message:'update data '+new Date().toISOString(), content, branch:GH_BRANCH, ...(ghSha?{sha:ghSha}:{})};
+    const r = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_FILE, {method:'PUT', headers:{'Authorization':'token '+GH_TOKEN,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'}, body:JSON.stringify(body)});
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const j = await r.json();
+    ghSha = j.content.sha;
+    localStorage.setItem('daphnia_v3', JSON.stringify(S));
+    setSyncStatus('synced');
+  } catch(e) {
+    console.warn('ghPush failed:', e);
+    setSyncStatus('error');
+    localStorage.setItem('daphnia_v3', JSON.stringify(S)); // at least save locally
+  }
+}
+
+// Debounced push — waits 1.5s after last change before pushing
+function persist(){
+  localStorage.setItem('daphnia_v3', JSON.stringify(S));
+  setSyncStatus('syncing');
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(()=>ghPush(), 1500);
+}
+
+function hydrate(){
+  try{const d=localStorage.getItem('daphnia_v3');if(d){const p=JSON.parse(d);Object.assign(S,p);}}catch(e){}
+}
+hydrate();
+
+// ── HELPERS ──
+const getB = id => S.beakers.find(b=>b.id===id);
+const popTotal = b => (+b.adults||0)+(+b.juv||0)+(+b.neosPop||0);
+function newBeakerId(){const ns=S.beakers.map(b=>+b.id.replace(/[^\d]/g,'')||0);return 'B-'+String(Math.max(0,...ns)+1).padStart(2,'0');}
+function newSolId(){return 'sol_'+Date.now();}
+
+// ── TABS ──
+function switchTab(t){
+  ['beakers','lab'].forEach(x=>{
+    document.getElementById('tab-'+x).classList.toggle('on',x===t);
+    document.getElementById('screen-'+x).classList.toggle('on',x===t);
+  });
+  if(t==='lab')renderLab();
+}
+
+// ════════════════════════════════════════
+//  RENDER — BEAKERS
+// ════════════════════════════════════════
+function render(){renderGrid();renderTree();updateHUD();}
+
+function beakerSVG(b){
+  const W=58,H=66;
+  const tx1=8,tx2=50,bx1=13,bx2=45,by=64;
+  const innerH=52;
+  const m4Pct=Math.min(1,(S.m4Stock>0&&b.m4Added>0)?b.m4Added/500:b.algaeFed>0?0.5:0.3);
+  const liqH=Math.round(m4Pct*innerH);
+  const algH=Math.round((b.algaeFed/50)*liqH);
+  const liqY=by-liqH, algY=by-algH;
+  const alive=b.alive;
+  const sc=alive?'#3a4a58':'#252d36';
+  const cp=`cp${b.id.replace(/\W/g,'')}`;
+  let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block">`;
+  s+=`<defs><clipPath id="${cp}"><polygon points="${tx1},7 ${tx2},7 ${bx2},${by} ${bx1},${by}"/></clipPath></defs>`;
+  if(liqH>0) s+=`<rect x="0" y="${liqY}" width="${W}" height="${liqH+3}" fill="${alive?'rgba(77,168,232,0.2)':'rgba(50,50,50,0.12)'}" clip-path="url(#${cp})"/>`;
+  if(algH>0) s+=`<rect x="0" y="${algY}" width="${W}" height="${algH+2}" fill="${alive?'rgba(61,216,164,0.3)':'rgba(50,50,50,0.08)'}" clip-path="url(#${cp})"/>`;
+  for(let i=1;i<=3;i++){const gy=by-Math.round(innerH*i/4);s+=`<line x1="${bx1+2}" y1="${gy}" x2="${bx1+7}" y2="${gy}" stroke="${sc}" stroke-width="0.7"/>`;}
+  s+=`<polyline points="${tx1},7 ${bx1},${by} ${bx2},${by} ${tx2},7" fill="none" stroke="${sc}" stroke-width="2" stroke-linejoin="round"/>`;
+  s+=`<line x1="${tx1-1}" y1="7" x2="${tx2+1}" y2="7" stroke="${sc}" stroke-width="1.5"/>`;
+  const pt=popTotal(b);
+  if(alive&&pt>0){
+    const dots=Math.min(5,Math.ceil(pt/5));
+    for(let i=0;i<dots;i++){const dx=16+i*7,dy=by-6-Math.round(Math.random()*8);s+=`<circle cx="${dx}" cy="${dy}" r="${1.4+Math.random()*.6}" fill="var(--amber)" opacity="${.7+Math.random()*.25}"/>`;}
+  }
+  if(!alive){
+    s+=`<line x1="${tx1+4}" y1="13" x2="${bx2-2}" y2="${by-4}" stroke="var(--coral)" stroke-width="1.5" opacity=".35"/>`;
+    s+=`<line x1="${bx2-2}" y1="13" x2="${tx1+4}" y2="${by-4}" stroke="var(--coral)" stroke-width="1.5" opacity=".35"/>`;
+  }
+  s+=`</svg>`;
+  return s;
+}
+
+function renderGrid(){
+  document.getElementById('grid').innerHTML=S.beakers.map(b=>{
+    const m4Pct=Math.min(100,Math.round(b.m4Added/500*100));
+    const aPct=Math.min(100,Math.round(b.algaeFed/50*100));
+    const ac=b.algaeFed>=5?'var(--teal)':'var(--coral)';
+    const pt=popTotal(b);
+    const popParts=[];
+    if(b.adults>0)popParts.push(`${b.adults}A`);
+    if(b.juv>0)popParts.push(`${b.juv}J`);
+    if(b.neosPop>0)popParts.push(`${b.neosPop}N`);
+    return`<div class="card${editId===b.id?' sel':''}${!b.alive?' dead':''}" onclick="openEdit('${b.id}')">
+      <div class="card-hdr">
+        <span class="card-id">${b.name||b.id}</span>
+        ${b.parent?`<span class="card-parent">← ${getB(b.parent)?getB(b.parent).name||b.parent:b.parent}</span>`:''}
+        <span class="sdot${b.alive?'':' off'}"></span>
+      </div>
+      <div class="bk-wrap">${beakerSVG(b)}</div>
+      <div class="mbar-row"><span class="mbar-lbl">M4</span><div class="mbar-track"><div class="mbar-fill" style="width:${m4Pct}%;background:var(--blue)"></div></div><span class="mbar-val">${b.m4Added}mL</span></div>
+      <div class="mbar-row"><span class="mbar-lbl">Algae</span><div class="mbar-track"><div class="mbar-fill" style="width:${aPct}%;background:${ac}"></div></div><span class="mbar-val" style="color:${ac}">${b.algaeFed}mL</span></div>
+
+      ${pt>0?`<div class="card-pop">🔬 ${pt} (${popParts.join(' · ')})</div>`:''}
+      ${b.deaths>0?`<div class="warn-lbl">💀 ${b.deaths} deaths</div>`:''}
+      ${b.notes?`<div class="card-note">${b.notes}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function renderTree(){
+  const roots=S.beakers.filter(b=>!b.parent);
+  let h='';
+  const nd=(b,child)=>`<div class="l-node${child?' child':''}${!b.alive?' dead':''}${editId===b.id?' sel':''}" onclick="openEdit('${b.id}')">
+    ${child?'<div class="l-conn"></div>':''}
+    <span class="l-dot ${b.alive?'on':'off'}"></span>
+    <span class="l-name">${b.name||b.id}</span>
+    <span class="l-date">${b.born?b.born.slice(0,5):'—'}</span>
+  </div>`;
+  roots.forEach(r=>{h+=nd(r,false);S.beakers.filter(c=>c.parent===r.id).forEach(c=>{h+=nd(c,true);});});
+  S.beakers.filter(b=>b.parent&&!roots.find(r=>r.id===b.parent)).forEach(b=>{h+=nd(b,true);});
+  document.getElementById('tree').innerHTML=h;
+}
+
+function updateHUD(){
+  const alive=S.beakers.filter(b=>b.alive);
+  const totPop=alive.reduce((s,b)=>s+popTotal(b),0);
+  document.getElementById('h-algae-val').textContent=S.algaeStock;
+  document.getElementById('h-algae-bar').style.width=Math.round(S.algaeStock/S.algaeMax*100)+'%';
+  document.getElementById('h-m4-val').textContent=S.m4Stock;
+  document.getElementById('h-m4-bar').style.width=Math.round(S.m4Stock/S.m4Max*100)+'%';
+  document.getElementById('h-pop').textContent=totPop;
+}
+
+// ════════════════════════════════════════
+//  EDIT BEAKER
+// ════════════════════════════════════════
+function openEdit(id){
+  editId=id;
+  const b=getB(id);
+  document.getElementById('e-title').textContent=b.name||b.id;
+  document.getElementById('e-name').value=b.name||b.id;
+  document.getElementById('e-algae').value=0;
+  document.getElementById('e-m4').value=0;
+  document.getElementById('e-adults').value=b.adults||0;
+  document.getElementById('e-juv').value=b.juv||0;
+  document.getElementById('e-neo-pop').value=b.neosPop||0;
+  document.getElementById('e-deaths').value='';
+  document.getElementById('e-notes').value=b.notes||'';
+  document.getElementById('e-neo-born').value='';
+  updatePopTotal();
+  updateFeedPreview();
+  setNow('e-datetime');
+  setNow('e-neo-datetime');
+  document.getElementById('e-neo-log').innerHTML=b.neoLog.map(l=>`<span class="log-line">${l}</span>`).join('');
+  renderEditHist(b);
+  const tb=document.getElementById('e-terminate-btn');
+  tb.textContent=b.alive?'Terminate':'Re-activate';
+  tb.className=b.alive?'btn btn-c':'btn btn-p';
+  document.getElementById('ov-edit').classList.add('on');
+  renderTree();
+}
+
+function updatePopTotal(){
+  const a=+document.getElementById('e-adults').value||0;
+  const j=+document.getElementById('e-juv').value||0;
+  const n=+document.getElementById('e-neo-pop').value||0;
+  document.getElementById('e-pop-total').textContent=`Total: ${a+j+n} daphnia`;
+}
+
+function updateFeedPreview(){
+  const av=+document.getElementById('e-algae').value||0;
+  const mv=+document.getElementById('e-m4').value||0;
+  const aAfter=S.algaeStock-av;
+  const mAfter=S.m4Stock-mv;
+  document.getElementById('e-algae-preview').textContent=av>0?`Stock: ${S.algaeStock} − ${av} = ${aAfter}mL remaining`:'';
+  document.getElementById('e-m4-preview').textContent=mv>0?`M4 stock: ${S.m4Stock} − ${mv} = ${mAfter}mL remaining`:'';
+}
+
+function renderEditHist(b){
+  const el=document.getElementById('e-hist');
+  if(!b.history||!b.history.length){el.innerHTML='<div style="font-family:var(--mono);font-size:11px;color:var(--tx3)">No history yet.</div>';return;}
+  el.innerHTML=[...b.history].reverse().map(h=>`<div class="hist-entry">
+    <div class="hist-date">${h.date}</div>
+    <div class="chips">${(h.chips||[]).map(c=>`<span class="chip ${c.t}">${c.l}</span>`).join('')}</div>
+    ${h.note?`<div class="hist-note">${h.note}</div>`:''}
+  </div>`).join('');
+}
+
+function closeEdit(){document.getElementById('ov-edit').classList.remove('on');editId=null;renderTree();}
+
+function saveEdit(){
+  const b=getB(editId);
+  const newName=document.getElementById('e-name').value.trim()||b.id;
+  const algaeFed=+document.getElementById('e-algae').value||0;
+  const m4Added=+document.getElementById('e-m4').value||0;
+  const newAdults=+document.getElementById('e-adults').value||0;
+  const newJuv=+document.getElementById('e-juv').value||0;
+  const newNeosPop=+document.getElementById('e-neo-pop').value||0;
+  const deaths=+document.getElementById('e-deaths').value||0;
+  const newNotes=document.getElementById('e-notes').value;
+
+  const chips=[];
+  const ts=tsFrom('e-datetime');
+  if(newName!==b.name) chips.push({t:'note',l:`✏ Renamed to ${newName}`});
+  if(algaeFed>0){S.algaeStock=Math.max(0,S.algaeStock-algaeFed);S.algaeHistory.push({date:ts,delta:-algaeFed,note:`Fed to ${b.name||b.id}`,bal:S.algaeStock});chips.push({t:'algae',l:`🌿 +${algaeFed}mL algae`});b.algaeFed+=algaeFed;}
+  if(m4Added>0){S.m4Stock=Math.max(0,S.m4Stock-m4Added);S.m4History.push({date:ts,delta:-m4Added,note:`Added to ${b.name||b.id}`,bal:S.m4Stock});chips.push({t:'m4',l:`💧 +${m4Added}mL M4`});b.m4Added+=m4Added;}
+
+  const oldPop=popTotal(b);
+  const newPop=newAdults+newJuv+newNeosPop;
+  if(newPop!==oldPop) chips.push({t:'pop',l:`🔬 Pop ${oldPop}→${newPop}`});
+  b.adults=newAdults; b.juv=newJuv; b.neosPop=newNeosPop;
+  if(deaths>0){chips.push({t:'death',l:`💀 ${deaths} deaths`});b.deaths=(b.deaths||0)+deaths;}
+  if(newNotes!==b.notes) chips.push({t:'note',l:'📝 note updated'});
+  b.name=newName; b.notes=newNotes;
+
+  if(chips.length) b.history.push({date:ts,chips,note:newNotes&&newNotes!==b.notes?`"${newNotes}"`:''});
+  persist(); closeEdit(); render();
+}
+
+function toggleTerminate(){
+  const b=getB(editId);
+  b.alive=!b.alive;
+  const ts=tsFrom('e-datetime');
+  b.history.push({date:ts,chips:[{t:'note',l:b.alive?'🟢 Re-activated':'🔴 Terminated'}],note:''});
+  persist(); closeEdit(); render();
+}
+
+function deleteBeaker(){
+  const b=getB(editId);
+  if(!confirm(`Delete "${b.name||b.id}" permanently? This cannot be undone.`))return;
+  S.beakers=S.beakers.filter(x=>x.id!==editId);
+  // unlink any children that pointed to this beaker
+  S.beakers.forEach(x=>{if(x.parent===editId)x.parent=null;});
+  persist(); closeEdit(); render();
+}
+
+function logNeoBorn(){
+  const b=getB(editId);
+  const n=+document.getElementById('e-neo-born').value||0;
+  if(n<=0)return;
+  const ts=tsFrom('e-neo-datetime');
+  const entry=`${ts} — ${n} neonates born`;
+  b.neoLog.push(entry);
+  b.history.push({date:ts,chips:[{t:'neo',l:`🦐 ${n} neonates born`}],note:''});
+  document.getElementById('e-neo-born').value='';
+  setNow('e-neo-datetime');
+  document.getElementById('e-neo-log').innerHTML=b.neoLog.map(l=>`<span class="log-line">${l}</span>`).join('');
+  renderEditHist(b);
+  persist();
+}
+
+function spawnChild(){
+  const b=getB(editId);
+  const n=+document.getElementById('e-neo-born').value||0;
+  const ts=tsFrom('e-datetime');
+  const nb={id:newBeakerId(),name:newBeakerId(),parent:b.id,alive:true,algaeFed:10,m4Added:200,adults:0,juv:0,neosPop:n||0,deaths:0,notes:'From '+(b.name||b.id),born:ts.split(' ·')[0],neoLog:[],history:[{date:ts,chips:[{t:'note',l:`Created from ${b.name||b.id}`}],note:n>0?`${n} neonates transferred`:''}]};
+  if(n>0){b.neoLog.push(`${ts} — ${n} neonates → ${nb.id}`);b.history.push({date:ts,chips:[{t:'neo',l:`🦐 ${n} → ${nb.id}`}],note:''});}
+  // deduct initial stock
+  S.algaeStock=Math.max(0,S.algaeStock-10);
+  S.m4Stock=Math.max(0,S.m4Stock-200);
+  S.beakers.push(nb);
+  persist(); closeEdit(); render();
+}
+
+function addBeaker(){
+  const ts=TS();
+  const nb={id:newBeakerId(),name:newBeakerId(),parent:null,alive:true,algaeFed:0,m4Added:0,adults:0,juv:0,neosPop:0,deaths:0,notes:'',born:ts.split(' ·')[0],neoLog:[],history:[{date:ts,chips:[{t:'note',l:'Created'}],note:''}]};
+  S.beakers.push(nb); persist(); render(); openEdit(nb.id);
+}
+
+// ════════════════════════════════════════
+//  STOCK SHEETS
+// ════════════════════════════════════════
+function openStockSheet(mode){
+  stockMode=mode;
+  const isAlgae=mode==='algae';
+  const val=isAlgae?S.algaeStock:S.m4Stock;
+  const mx=isAlgae?S.algaeMax:S.m4Max;
+  const hist=isAlgae?S.algaeHistory:S.m4History;
+  document.getElementById('st-title').textContent=isAlgae?'🌿 Algae stock':'💧 M4 stock';
+  document.getElementById('st-cur-lbl').textContent=isAlgae?'Current algae stock (mL)':'Current M4 stock (mL)';
+  document.getElementById('st-val').value=val;
+  document.getElementById('st-max').value=mx;
+  document.getElementById('st-note').value='';
+  setNow('st-datetime');
+  document.getElementById('st-hist').innerHTML=[...hist].reverse().map(h=>`<div class="sh-entry"><span>${h.date} · ${h.note}</span><span class="${h.delta>=0?'sh-pos':'sh-neg'}">${h.delta>=0?'+':''}${h.delta}mL (${h.bal}mL)</span></div>`).join('');
+  document.getElementById('ov-stock').classList.add('on');
+}
+function closeStock(){document.getElementById('ov-stock').classList.remove('on');}
+function saveStock(){
+  const newVal=+document.getElementById('st-val').value||0;
+  const newMax=+document.getElementById('st-max').value||0;
+  const note=document.getElementById('st-note').value||'Manual update';
+  const ts=tsFrom('st-datetime');
+  const isAlgae=stockMode==='algae';
+  const old=isAlgae?S.algaeStock:S.m4Stock;
+  const diff=newVal-old;
+  if(isAlgae){S.algaeStock=newVal;S.algaeMax=newMax;S.algaeHistory.push({date:ts,delta:diff,note,bal:newVal});}
+  else{S.m4Stock=newVal;S.m4Max=newMax;S.m4History.push({date:ts,delta:diff,note,bal:newVal});}
+  persist(); closeStock(); render();
+}
+
+// ════════════════════════════════════════
+//  LAB SOLUTIONS
+// ════════════════════════════════════════
+function renderLab(){
+  // Algae batch preview
+  const algaeBatches=S.algaeSols.length>0?Math.floor(Math.min(...S.algaeSols.map(s=>s.needed>0?s.stock/s.needed:Infinity))):0;
+  let abPreview=`<div class="make-batch-title">Make a new algae batch</div>`;
+  abPreview+=`<div class="batch-preview">`;
+  S.algaeSols.forEach(s=>{
+    if(s.needed<=0)return;
+    const ok=s.stock>=s.needed;
+    abPreview+=`<span class="${ok?'batch-ok':'batch-low'}">• ${s.name}: need ${s.needed}mL, have ${s.stock}mL ${ok?'✓':'⚠ LOW'}</span><br>`;
+  });
+  abPreview+=`</div>`;
+  abPreview+=`<div style="margin-bottom:8px"><div class="retro-lbl" style="color:var(--purple);font-size:8px;margin-bottom:4px">🕐 Batch date</div><input type="datetime-local" id="algae-batch-dt" style="background:var(--surf2);border:1px solid var(--bd2);color:var(--tx);font-family:var(--mono);font-size:11px;padding:6px 9px;border-radius:6px;width:100%;color-scheme:dark"></div>`;
+  abPreview+=`<div class="acts"><button class="btn btn-t" onclick="makeBatch('algae')" ${algaeBatches<1?'disabled style="opacity:.4"':''}>Make 4L batch (${algaeBatches} possible)</button></div>`;
+  document.getElementById('algae-batch-box').innerHTML=abPreview;
+  setNow('algae-batch-dt');
+
+  // M4 batch preview
+  const m4Batches=S.m4Sols.length>0?Math.floor(Math.min(...S.m4Sols.map(s=>s.needed>0?s.stock/s.needed:Infinity))):0;
+  let mbPreview=`<div class="make-batch-title">Make a new 5L M4 batch</div>`;
+  mbPreview+=`<div class="batch-preview">`;
+  S.m4Sols.forEach(s=>{
+    if(s.needed<=0)return;
+    const ok=s.stock>=s.needed;
+    mbPreview+=`<span class="${ok?'batch-ok':'batch-low'}">• ${s.name}: need ${s.needed}mL, have ${s.stock}mL ${ok?'✓':'⚠ LOW'}</span><br>`;
+  });
+  mbPreview+=`</div>`;
+  mbPreview+=`<div style="margin-bottom:8px"><div class="retro-lbl" style="color:var(--purple);font-size:8px;margin-bottom:4px">🕐 Batch date</div><input type="datetime-local" id="m4-batch-dt" style="background:var(--surf2);border:1px solid var(--bd2);color:var(--tx);font-family:var(--mono);font-size:11px;padding:6px 9px;border-radius:6px;width:100%;color-scheme:dark"></div>`;
+  mbPreview+=`<div class="acts"><button class="btn btn-b" onclick="makeBatch('m4')" ${m4Batches<1?'disabled style="opacity:.4"':''}>Make 5L batch (${m4Batches} possible)</button></div>`;
+  document.getElementById('m4-batch-box').innerHTML=mbPreview;
+  setNow('m4-batch-dt');
+
+  // Sol grids
+  const mkCard=(s,type)=>{
+    const pct=Math.round(s.stock/s.max*100);
+    const col=type==='algae'?'var(--teal)':'var(--blue)';
+    const low=s.needed>0&&s.stock<s.needed;
+    return`<div class="sol-card ${type}-sol" onclick="openSolEdit('${type}','${s.id}')">
+      <div class="sol-name">${s.name}</div>
+      <div class="sol-bar-row">
+        <div class="sol-track"><div class="sol-fill" style="width:${pct}%;background:${col}"></div></div>
+        <span class="sol-val" style="color:${col}">${s.stock}mL</span>
+      </div>
+      <div class="sol-needed">Per batch: ${s.needed}mL · max: ${s.max}mL</div>
+      ${low?`<div class="sol-warn">⚠ below batch requirement</div>`:''}
+    </div>`;
+  };
+  document.getElementById('algae-sol-grid').innerHTML=S.algaeSols.map(s=>mkCard(s,'algae')).join('');
+  document.getElementById('m4-sol-grid').innerHTML=S.m4Sols.map(s=>mkCard(s,'m4')).join('');
+}
+
+function makeBatch(type){
+  const sols=type==='algae'?S.algaeSols:S.m4Sols;
+  const canMake=Math.floor(Math.min(...sols.map(s=>s.needed>0?s.stock/s.needed:Infinity)));
+  if(canMake<1){alert('Not enough stock to make a batch.');return;}
+  sols.forEach(s=>{if(s.needed>0)s.stock=Math.max(0,s.stock-s.needed);});
+  const dtId=type==='algae'?'algae-batch-dt':'m4-batch-dt';
+  const ts=tsFrom(dtId);
+  if(type==='algae'){const add=4000;S.algaeStock+=add;S.algaeHistory.push({date:ts,delta:add,note:'New 4L algae batch made',bal:S.algaeStock});}
+  else{const add=5000;S.m4Stock+=add;S.m4History.push({date:ts,delta:add,note:'New 5L M4 batch made',bal:S.m4Stock});}
+  persist(); renderLab(); render();
+  alert('Batch made! Solutions deducted. Stock updated.');
+}
+
+function openSolEdit(type,id){
+  solMode=type; solEditId=id;
+  const sol=id?(type==='algae'?S.algaeSols:S.m4Sols).find(s=>s.id===id):null;
+  document.getElementById('sol-title').textContent=sol?`Edit: ${sol.name}`:(type==='algae'?'New algae solution':'New M4 solution');
+  document.getElementById('sol-name').value=sol?sol.name:'';
+  document.getElementById('sol-stock').value=sol?sol.stock:0;
+  document.getElementById('sol-max').value=sol?sol.max:500;
+  document.getElementById('sol-needed').value=sol?sol.needed:0;
+  document.getElementById('sol-needed-lbl').textContent=type==='m4'?'Amount needed per 5L M4 batch (mL)':'Amount needed per algae batch (mL)';
+  document.getElementById('sol-del-btn').style.display=id?'inline-flex':'none';
+  document.getElementById('ov-sol').classList.add('on');
+}
+function closeSolEdit(){document.getElementById('ov-sol').classList.remove('on');}
+function saveSolEdit(){
+  const arr=solMode==='algae'?S.algaeSols:S.m4Sols;
+  const name=document.getElementById('sol-name').value.trim();
+  const stock=+document.getElementById('sol-stock').value||0;
+  const max=+document.getElementById('sol-max').value||100;
+  const needed=+document.getElementById('sol-needed').value||0;
+  if(solEditId){const s=arr.find(x=>x.id===solEditId);if(s){s.name=name;s.stock=stock;s.max=max;s.needed=needed;}}
+  else{arr.push({id:newSolId(),name,stock,max,needed});}
+  persist(); closeSolEdit(); renderLab();
+}
+function deleteSol(){
+  if(!confirm('Delete this solution?'))return;
+  if(solMode==='algae') S.algaeSols=S.algaeSols.filter(s=>s.id!==solEditId);
+  else S.m4Sols=S.m4Sols.filter(s=>s.id!==solEditId);
+  persist(); closeSolEdit(); renderLab();
+}
+
+// ════════════════════════════════════════
+//  FLOW
+// ════════════════════════════════════════
+function openFlow(){
+  const W=520,NW=140,NH=40,pad=16;
+  const roots=S.beakers.filter(b=>!b.parent);
+  const pos={};
+  roots.forEach((r,i)=>pos[r.id]={x:pad,y:pad+i*(NH+70)});
+  const byParent={};
+  S.beakers.filter(b=>b.parent).forEach(c=>{if(!byParent[c.parent])byParent[c.parent]=[];byParent[c.parent].push(c);});
+  let cy=pad;
+  roots.forEach(r=>{(byParent[r.id]||[]).forEach(c=>{pos[c.id]={x:240,y:cy};cy+=NH+20;});cy+=26;});
+  S.beakers.filter(b=>b.parent&&!roots.find(r=>r.id===b.parent)).forEach(b=>{pos[b.id]={x:240,y:cy};cy+=NH+20;});
+  const maxY=Math.max(...Object.values(pos).map(p=>p.y+NH))+pad;
+  let s=`<svg width="100%" viewBox="0 0 ${W} ${maxY}" style="display:block">`;
+  S.beakers.forEach(b=>{
+    if(!b.parent||!pos[b.id]||!pos[b.parent])return;
+    const f=pos[b.parent],t=pos[b.id];
+    const x1=f.x+NW,y1=f.y+NH/2,x2=t.x,y2=t.y+NH/2,mx=(x1+x2)/2;
+    const sw=Math.max(2,Math.round(b.m4Added/500*10));
+    s+=`<path d="M${x1},${y1}C${mx},${y1} ${mx},${y2} ${x2},${y2}" fill="none" stroke="${b.alive?'rgba(61,216,164,.38)':'rgba(72,79,88,.35)'}" stroke-width="${sw}" stroke-linecap="round"/>`;
+  });
+  S.beakers.forEach(b=>{
+    if(!pos[b.id])return;
+    const{x,y}=pos[b.id],col=b.alive?'#3dd8a4':'#484f58';
+    const pt=popTotal(b);
+    s+=`<rect x="${x}" y="${y}" width="${NW}" height="${NH}" rx="7" fill="${b.alive?'rgba(61,216,164,.07)':'rgba(30,30,30,.4)'}" stroke="${col}" stroke-width="1.5"/>`;
+    s+=`<text x="${x+10}" y="${y+15}" font-family="Space Mono,monospace" font-size="13" font-weight="bold" fill="${col}">${b.name||b.id}</text>`;
+    s+=`<text x="${x+10}" y="${y+31}" font-family="Space Mono,monospace" font-size="11" fill="${b.alive?'#8b949e':'#484f58'}">${b.alive?(pt+' daphnia'):'terminated'}</text>`;
+  });
+  s+=`</svg>`;
+  document.getElementById('flow-svg').innerHTML=s;
+  document.getElementById('ov-flow').classList.add('on');
+}
+
+// ════════════════════════════════════════
+//  IMPORT / EXPORT
+// ════════════════════════════════════════
+function exportData(){
+  const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='daphnia_backup_'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+  document.getElementById('ov-io').classList.remove('on');
+}
+function importData(ev){
+  const f=ev.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{try{S=JSON.parse(e.target.result);persist();render();renderLab();document.getElementById('ov-io').classList.remove('on');alert('Import successful!');}catch(ex){alert('Invalid JSON file.');}};
+  r.readAsText(f);
+  ev.target.value='';
+}
+
+// ── CLOSE OVERLAYS ON BG TAP ──
+['ov-edit','ov-stock','ov-sol','ov-flow','ov-io'].forEach(id=>{
+  document.getElementById(id).addEventListener('click',e=>{if(e.target===e.currentTarget)e.target.classList.remove('on');});
+});
+
+// ── STARTUP: show localStorage immediately, then pull latest from GitHub ──
+render();
+ghLoad().then(loaded=>{ if(loaded){ render(); } });
+</script>
+</body>
+</html>
