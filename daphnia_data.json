@@ -45,7 +45,7 @@
       "alive": true,
       "algaeFed": 0,
       "m4Added": 0,
-      "adults": 0,
+      "adults": 11,
       "juv": 0,
       "neosPop": 0,
       "deaths": 0,
@@ -59,6 +59,16 @@
             {
               "t": "note",
               "l": "🟢 Re-activated"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "date": "25.05.2026 00:52",
+          "chips": [
+            {
+              "t": "pop",
+              "l": "🔬 Pop 0→11"
             }
           ],
           "note": ""
