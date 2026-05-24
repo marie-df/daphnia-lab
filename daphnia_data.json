@@ -59,7 +59,8 @@
       "born": "01.04.2026",
       "neoLog": [
         "15.05.2026 00:56 — 57 neonates born",
-        "01.05.2026 00:56 — 24 neonates born"
+        "01.05.2026 00:56 — 24 neonates born",
+        "01.05.2026 00:56 — 1 neonates born"
       ],
       "history": [
         {
@@ -98,6 +99,16 @@
             {
               "t": "neo",
               "l": "🦐 24 neonates born"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "date": "01.05.2026 00:56",
+          "chips": [
+            {
+              "t": "neo",
+              "l": "🦐 1 neonates born"
             }
           ],
           "note": ""
