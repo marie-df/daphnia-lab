@@ -45,80 +45,9 @@
   ],
   "beakers": [
     {
-      "id": "B-00",
-      "name": "B-00",
-      "parent": null,
-      "alive": true,
-      "algaeFed": 0,
-      "m4Added": 0,
-      "adults": 11,
-      "juv": 0,
-      "neosPop": 0,
-      "deaths": 0,
-      "notes": "Original stock",
-      "born": "01.04.2026",
-      "neoLog": [
-        "15.05.2026 00:56 — 57 neonates born",
-        "01.05.2026 00:56 — 24 neonates born",
-        "01.05.2026 00:56 — 1 neonates born"
-      ],
-      "history": [
-        {
-          "date": "25.05.2026 00:52",
-          "chips": [
-            {
-              "t": "note",
-              "l": "🟢 Re-activated"
-            }
-          ],
-          "note": ""
-        },
-        {
-          "date": "25.05.2026 00:52",
-          "chips": [
-            {
-              "t": "pop",
-              "l": "🔬 Pop 0→11"
-            }
-          ],
-          "note": ""
-        },
-        {
-          "date": "15.05.2026 00:56",
-          "chips": [
-            {
-              "t": "neo",
-              "l": "🦐 57 neonates born"
-            }
-          ],
-          "note": ""
-        },
-        {
-          "date": "01.05.2026 00:56",
-          "chips": [
-            {
-              "t": "neo",
-              "l": "🦐 24 neonates born"
-            }
-          ],
-          "note": ""
-        },
-        {
-          "date": "01.05.2026 00:56",
-          "chips": [
-            {
-              "t": "neo",
-              "l": "🦐 1 neonates born"
-            }
-          ],
-          "note": ""
-        }
-      ]
-    },
-    {
       "id": "B-01",
       "name": "B-01",
-      "parent": "B-00",
+      "parent": null,
       "alive": true,
       "algaeFed": 18,
       "m4Added": 0,
@@ -165,7 +94,7 @@
     {
       "id": "B-03",
       "name": "B-02",
-      "parent": "B-00",
+      "parent": null,
       "alive": true,
       "algaeFed": 20,
       "m4Added": 0,
@@ -206,7 +135,7 @@
     {
       "id": "B-05",
       "name": "B-03",
-      "parent": "B-00",
+      "parent": null,
       "alive": true,
       "algaeFed": 13,
       "m4Added": 0,
@@ -257,7 +186,7 @@
     {
       "id": "B-06",
       "name": "B-04",
-      "parent": "B-00",
+      "parent": null,
       "alive": true,
       "algaeFed": 22,
       "m4Added": 0,
