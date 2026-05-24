@@ -9,7 +9,7 @@
       "bal": 500
     }
   ],
-  "m4Stock": 3000,
+  "m4Stock": 2000,
   "m4Max": 5000,
   "m4History": [
     {
@@ -23,6 +23,12 @@
       "delta": 1000,
       "note": "Manual update",
       "bal": 3000
+    },
+    {
+      "date": "24.05.2026 22:04",
+      "delta": -1000,
+      "note": "Manual update",
+      "bal": 2000
     }
   ],
   "beakers": [
