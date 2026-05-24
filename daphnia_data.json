@@ -42,7 +42,7 @@
       "id": "B-00",
       "name": "B-00",
       "parent": null,
-      "alive": false,
+      "alive": true,
       "algaeFed": 0,
       "m4Added": 0,
       "adults": 0,
@@ -52,7 +52,18 @@
       "notes": "Original stock",
       "born": "01.04.2026",
       "neoLog": [],
-      "history": []
+      "history": [
+        {
+          "date": "25.05.2026 00:52",
+          "chips": [
+            {
+              "t": "note",
+              "l": "🟢 Re-activated"
+            }
+          ],
+          "note": ""
+        }
+      ]
     },
     {
       "id": "B-01",
