@@ -315,10 +315,10 @@
     },
     {
       "id": "as2",
-      "name": "Trace elements",
-      "stock": 190,
+      "name": "Solution 2",
+      "stock": 92,
       "max": 200,
-      "needed": 2
+      "needed": 4
     },
     {
       "id": "as3",
