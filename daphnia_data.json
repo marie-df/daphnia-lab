@@ -123,45 +123,6 @@
       ]
     },
     {
-      "id": "B-02",
-      "name": "B-02",
-      "parent": "B-00",
-      "alive": true,
-      "algaeFed": 11,
-      "m4Added": 0,
-      "adults": 9,
-      "juv": 5,
-      "neosPop": 2,
-      "deaths": 1,
-      "notes": "Slightly turbid",
-      "born": "12.04.2026",
-      "neoLog": [
-        "20.04.2026 Â· 17:32 â 18 neonates born"
-      ],
-      "history": [
-        {
-          "date": "12.04.2026 Â· 09:00",
-          "chips": [
-            {
-              "t": "note",
-              "l": "Created from B-00"
-            }
-          ],
-          "note": ""
-        },
-        {
-          "date": "20.04.2026 Â· 17:32",
-          "chips": [
-            {
-              "t": "neo",
-              "l": "ð¦ 18 neonates born"
-            }
-          ],
-          "note": ""
-        }
-      ]
-    },
-    {
       "id": "B-03",
       "name": "B-03",
       "parent": "B-00",
