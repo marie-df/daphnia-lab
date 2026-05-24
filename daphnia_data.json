@@ -124,14 +124,14 @@
     },
     {
       "id": "B-03",
-      "name": "B-03",
+      "name": "B-02",
       "parent": "B-00",
       "alive": true,
       "algaeFed": 20,
       "m4Added": 0,
-      "adults": 18,
-      "juv": 10,
-      "neosPop": 6,
+      "adults": 12,
+      "juv": 0,
+      "neosPop": 0,
       "deaths": 0,
       "notes": "Very active",
       "born": "15.04.2026",
@@ -143,6 +143,20 @@
             {
               "t": "note",
               "l": "Created from B-00"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "date": "25.05.2026 00:53",
+          "chips": [
+            {
+              "t": "note",
+              "l": "✏ Renamed to B-02"
+            },
+            {
+              "t": "pop",
+              "l": "🔬 Pop 34→12"
             }
           ],
           "note": ""
