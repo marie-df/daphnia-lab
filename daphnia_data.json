@@ -165,12 +165,12 @@
     },
     {
       "id": "B-05",
-      "name": "B-05",
+      "name": "B-03",
       "parent": "B-00",
       "alive": true,
       "algaeFed": 13,
       "m4Added": 0,
-      "adults": 8,
+      "adults": 9,
       "juv": 0,
       "neosPop": 0,
       "deaths": 0,
@@ -194,6 +194,20 @@
             {
               "t": "pop",
               "l": "🔬 Pop 20→8"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "date": "25.05.2026 00:53",
+          "chips": [
+            {
+              "t": "note",
+              "l": "✏ Renamed to B-03"
+            },
+            {
+              "t": "pop",
+              "l": "🔬 Pop 8→9"
             }
           ],
           "note": ""
