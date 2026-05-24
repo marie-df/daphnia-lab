@@ -235,6 +235,33 @@
           "note": ""
         }
       ]
+    },
+    {
+      "id": "B-07",
+      "name": "B-07",
+      "parent": null,
+      "alive": true,
+      "algaeFed": 0,
+      "m4Added": 0,
+      "adults": 0,
+      "juv": 0,
+      "neosPop": 0,
+      "deaths": 0,
+      "notes": "",
+      "born": "25.05.2026 00:57",
+      "neoLog": [],
+      "history": [
+        {
+          "date": "25.05.2026 00:57",
+          "chips": [
+            {
+              "t": "note",
+              "l": "Created"
+            }
+          ],
+          "note": ""
+        }
+      ]
     }
   ],
   "algaeSols": [
