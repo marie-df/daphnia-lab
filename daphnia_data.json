@@ -9,7 +9,7 @@
       "bal": 500
     }
   ],
-  "m4Stock": 9800,
+  "m4Stock": 10000,
   "m4Max": 5000,
   "m4History": [
     {
@@ -33,6 +33,12 @@
     {
       "date": "25.05.2026 00:50",
       "delta": 8000,
+      "note": "Manual update",
+      "bal": 10000
+    },
+    {
+      "date": "25.05.2026 00:56",
+      "delta": 200,
       "note": "Manual update",
       "bal": 10000
     }
