@@ -1,0 +1,425 @@
+{
+  "algaeStock": 500,
+  "algaeMax": 1000,
+  "algaeHistory": [
+    {
+      "date": "01.05.2026 · 08:00",
+      "delta": 500,
+      "note": "Initial stock",
+      "bal": 500
+    }
+  ],
+  "m4Stock": 3000,
+  "m4Max": 5000,
+  "m4History": [
+    {
+      "date": "01.05.2026 · 08:00",
+      "delta": 2000,
+      "note": "Initial M4",
+      "bal": 2000
+    },
+    {
+      "date": "24.05.2026 22:03",
+      "delta": 1000,
+      "note": "Manual update",
+      "bal": 3000
+    }
+  ],
+  "beakers": [
+    {
+      "id": "B-00",
+      "name": "B-00",
+      "parent": null,
+      "alive": false,
+      "algaeFed": 0,
+      "m4Added": 0,
+      "adults": 0,
+      "juv": 0,
+      "neosPop": 0,
+      "deaths": 0,
+      "notes": "Original stock",
+      "born": "01.04.2026",
+      "neoLog": [],
+      "history": []
+    },
+    {
+      "id": "B-01",
+      "name": "B-01",
+      "parent": "B-00",
+      "alive": true,
+      "algaeFed": 18,
+      "m4Added": 0,
+      "adults": 12,
+      "juv": 8,
+      "neosPop": 4,
+      "deaths": 0,
+      "notes": "",
+      "born": "10.04.2026",
+      "neoLog": [],
+      "history": [
+        {
+          "date": "10.04.2026 · 09:00",
+          "chips": [
+            {
+              "t": "note",
+              "l": "Created from B-00"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "B-02",
+      "name": "B-02",
+      "parent": "B-00",
+      "alive": true,
+      "algaeFed": 11,
+      "m4Added": 0,
+      "adults": 9,
+      "juv": 5,
+      "neosPop": 2,
+      "deaths": 1,
+      "notes": "Slightly turbid",
+      "born": "12.04.2026",
+      "neoLog": [
+        "20.04.2026 · 17:32 — 18 neonates born"
+      ],
+      "history": [
+        {
+          "date": "12.04.2026 · 09:00",
+          "chips": [
+            {
+              "t": "note",
+              "l": "Created from B-00"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "date": "20.04.2026 · 17:32",
+          "chips": [
+            {
+              "t": "neo",
+              "l": "🦐 18 neonates born"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "B-03",
+      "name": "B-03",
+      "parent": "B-00",
+      "alive": true,
+      "algaeFed": 20,
+      "m4Added": 0,
+      "adults": 18,
+      "juv": 10,
+      "neosPop": 6,
+      "deaths": 0,
+      "notes": "Very active",
+      "born": "15.04.2026",
+      "neoLog": [],
+      "history": [
+        {
+          "date": "15.04.2026 · 08:00",
+          "chips": [
+            {
+              "t": "note",
+              "l": "Created from B-00"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "B-04",
+      "name": "B-04",
+      "parent": "B-00",
+      "alive": true,
+      "algaeFed": 2,
+      "m4Added": 0,
+      "adults": 5,
+      "juv": 2,
+      "neosPop": 0,
+      "deaths": 3,
+      "notes": "",
+      "born": "18.04.2026",
+      "neoLog": [],
+      "history": [
+        {
+          "date": "18.04.2026 · 08:00",
+          "chips": [
+            {
+              "t": "note",
+              "l": "Created from B-00"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "B-05",
+      "name": "B-05",
+      "parent": "B-00",
+      "alive": true,
+      "algaeFed": 13,
+      "m4Added": 0,
+      "adults": 11,
+      "juv": 6,
+      "neosPop": 3,
+      "deaths": 0,
+      "notes": "",
+      "born": "20.04.2026",
+      "neoLog": [],
+      "history": [
+        {
+          "date": "20.04.2026 · 08:00",
+          "chips": [
+            {
+              "t": "note",
+              "l": "Created from B-00"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "B-06",
+      "name": "B-06",
+      "parent": "B-00",
+      "alive": true,
+      "algaeFed": 22,
+      "m4Added": 0,
+      "adults": 20,
+      "juv": 14,
+      "neosPop": 8,
+      "deaths": 0,
+      "notes": "Best performer",
+      "born": "22.04.2026",
+      "neoLog": [
+        "10.05.2026 · 11:00 — 42 neonates born"
+      ],
+      "history": [
+        {
+          "date": "22.04.2026 · 08:00",
+          "chips": [
+            {
+              "t": "note",
+              "l": "Created from B-00"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "date": "10.05.2026 · 11:00",
+          "chips": [
+            {
+              "t": "neo",
+              "l": "🦐 42 neonates born"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ],
+  "algaeSols": [
+    {
+      "id": "as1",
+      "name": "BG-11 concentrate",
+      "stock": 450,
+      "max": 500,
+      "needed": 10
+    },
+    {
+      "id": "as2",
+      "name": "Trace elements",
+      "stock": 190,
+      "max": 200,
+      "needed": 2
+    },
+    {
+      "id": "as3",
+      "name": "Vitamin B12",
+      "stock": 95,
+      "max": 100,
+      "needed": 1
+    },
+    {
+      "id": "as4",
+      "name": "Fe-EDTA",
+      "stock": 380,
+      "max": 400,
+      "needed": 5
+    }
+  ],
+  "m4Sols": [
+    {
+      "id": "m4s1",
+      "name": "CaCl₂·2H₂O",
+      "stock": 900,
+      "max": 1000,
+      "needed": 18
+    },
+    {
+      "id": "m4s2",
+      "name": "MgSO₄·7H₂O",
+      "stock": 880,
+      "max": 1000,
+      "needed": 12
+    },
+    {
+      "id": "m4s3",
+      "name": "NaHCO₃",
+      "stock": 750,
+      "max": 1000,
+      "needed": 8
+    },
+    {
+      "id": "m4s4",
+      "name": "KCl",
+      "stock": 950,
+      "max": 1000,
+      "needed": 3
+    },
+    {
+      "id": "m4s5",
+      "name": "Na₂SiO₃",
+      "stock": 600,
+      "max": 1000,
+      "needed": 5
+    },
+    {
+      "id": "m4s6",
+      "name": "NaNO₃",
+      "stock": 850,
+      "max": 1000,
+      "needed": 10
+    },
+    {
+      "id": "m4s7",
+      "name": "KH₂PO₄",
+      "stock": 700,
+      "max": 1000,
+      "needed": 4
+    },
+    {
+      "id": "m4s8",
+      "name": "FeCl₃·6H₂O",
+      "stock": 480,
+      "max": 500,
+      "needed": 2
+    },
+    {
+      "id": "m4s9",
+      "name": "MnCl₂·4H₂O",
+      "stock": 490,
+      "max": 500,
+      "needed": 1
+    },
+    {
+      "id": "m4s10",
+      "name": "ZnCl₂",
+      "stock": 195,
+      "max": 200,
+      "needed": 0.5
+    },
+    {
+      "id": "m4s11",
+      "name": "CoCl₂·6H₂O",
+      "stock": 198,
+      "max": 200,
+      "needed": 0.5
+    },
+    {
+      "id": "m4s12",
+      "name": "CuCl₂·2H₂O",
+      "stock": 197,
+      "max": 200,
+      "needed": 0.5
+    },
+    {
+      "id": "m4s13",
+      "name": "Na₂MoO₄",
+      "stock": 199,
+      "max": 200,
+      "needed": 0.5
+    },
+    {
+      "id": "m4s14",
+      "name": "H₃BO₃",
+      "stock": 490,
+      "max": 500,
+      "needed": 2
+    },
+    {
+      "id": "m4s15",
+      "name": "Na₂EDTA",
+      "stock": 480,
+      "max": 500,
+      "needed": 3
+    },
+    {
+      "id": "m4s16",
+      "name": "Thiamine HCl",
+      "stock": 95,
+      "max": 100,
+      "needed": 0.5
+    },
+    {
+      "id": "m4s17",
+      "name": "Cyanocobalamin",
+      "stock": 48,
+      "max": 50,
+      "needed": 0.2
+    },
+    {
+      "id": "m4s18",
+      "name": "Biotin",
+      "stock": 49,
+      "max": 50,
+      "needed": 0.1
+    },
+    {
+      "id": "m4s19",
+      "name": "Inositol",
+      "stock": 190,
+      "max": 200,
+      "needed": 1
+    },
+    {
+      "id": "m4s20",
+      "name": "Nicotinamide",
+      "stock": 185,
+      "max": 200,
+      "needed": 1
+    },
+    {
+      "id": "m4s21",
+      "name": "Pantothenate",
+      "stock": 188,
+      "max": 200,
+      "needed": 1
+    },
+    {
+      "id": "m4s22",
+      "name": "Pyridoxine",
+      "stock": 192,
+      "max": 200,
+      "needed": 0.5
+    },
+    {
+      "id": "m4s23",
+      "name": "Riboflavin",
+      "stock": 193,
+      "max": 200,
+      "needed": 0.5
+    }
+  ]
+}
