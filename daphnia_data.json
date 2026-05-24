@@ -158,53 +158,6 @@
       ]
     },
     {
-      "id": "B-04",
-      "name": "B-04",
-      "parent": "B-00",
-      "alive": false,
-      "algaeFed": 2,
-      "m4Added": 0,
-      "adults": 9,
-      "juv": 0,
-      "neosPop": 0,
-      "deaths": 3,
-      "notes": "",
-      "born": "18.04.2026",
-      "neoLog": [],
-      "history": [
-        {
-          "date": "18.04.2026 Â· 08:00",
-          "chips": [
-            {
-              "t": "note",
-              "l": "Created from B-00"
-            }
-          ],
-          "note": ""
-        },
-        {
-          "date": "25.05.2026 00:51",
-          "chips": [
-            {
-              "t": "pop",
-              "l": "🔬 Pop 7→9"
-            }
-          ],
-          "note": ""
-        },
-        {
-          "date": "25.05.2026 00:51",
-          "chips": [
-            {
-              "t": "note",
-              "l": "🔴 Terminated"
-            }
-          ],
-          "note": ""
-        }
-      ]
-    },
-    {
       "id": "B-05",
       "name": "B-05",
       "parent": "B-00",
