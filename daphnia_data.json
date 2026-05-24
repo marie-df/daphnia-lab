@@ -308,10 +308,10 @@
   "algaeSols": [
     {
       "id": "as1",
-      "name": "BG-11 concentrate",
-      "stock": 450,
+      "name": "Solution 1 : macroelements",
+      "stock": 170,
       "max": 500,
-      "needed": 10
+      "needed": 40
     },
     {
       "id": "as2",
