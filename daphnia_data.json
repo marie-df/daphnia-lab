@@ -278,7 +278,7 @@
       "juv": 0,
       "neosPop": 0,
       "deaths": 0,
-      "notes": "From B-00",
+      "notes": "From B-05",
       "born": "25.05.2026 00:52",
       "neoLog": [],
       "history": [
@@ -288,6 +288,16 @@
             {
               "t": "note",
               "l": "Created from B-00"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "date": "25.05.2026 00:55",
+          "chips": [
+            {
+              "t": "note",
+              "l": "📝 note updated"
             }
           ],
           "note": ""
