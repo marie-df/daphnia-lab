@@ -1,5 +1,5 @@
 {
-  "algaeStock": 500,
+  "algaeStock": 490,
   "algaeMax": 1000,
   "algaeHistory": [
     {
@@ -9,7 +9,7 @@
       "bal": 500
     }
   ],
-  "m4Stock": 10000,
+  "m4Stock": 9800,
   "m4Max": 5000,
   "m4History": [
     {
@@ -219,6 +219,33 @@
             {
               "t": "neo",
               "l": "ð¦ 42 neonates born"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "B-07",
+      "name": "B-07",
+      "parent": "B-00",
+      "alive": true,
+      "algaeFed": 10,
+      "m4Added": 200,
+      "adults": 0,
+      "juv": 0,
+      "neosPop": 0,
+      "deaths": 0,
+      "notes": "From B-00",
+      "born": "25.05.2026 00:52",
+      "neoLog": [],
+      "history": [
+        {
+          "date": "25.05.2026 00:52",
+          "chips": [
+            {
+              "t": "note",
+              "l": "Created from B-00"
             }
           ],
           "note": ""
