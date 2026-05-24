@@ -330,9 +330,9 @@
     {
       "id": "as4",
       "name": "Solution 4: bicarbonate",
-      "stock": 380,
+      "stock": 242,
       "max": 400,
-      "needed": 5
+      "needed": 4
     }
   ],
   "m4Sols": [
