@@ -322,10 +322,10 @@
     },
     {
       "id": "as3",
-      "name": "Vitamin B12",
-      "stock": 95,
+      "name": "Solution 3: oligo-éléments",
+      "stock": 242,
       "max": 100,
-      "needed": 1
+      "needed": 4
     },
     {
       "id": "as4",
