@@ -164,8 +164,8 @@
       "alive": true,
       "algaeFed": 2,
       "m4Added": 0,
-      "adults": 5,
-      "juv": 2,
+      "adults": 9,
+      "juv": 0,
       "neosPop": 0,
       "deaths": 3,
       "notes": "",
@@ -178,6 +178,16 @@
             {
               "t": "note",
               "l": "Created from B-00"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "date": "25.05.2026 00:51",
+          "chips": [
+            {
+              "t": "pop",
+              "l": "🔬 Pop 7→9"
             }
           ],
           "note": ""
