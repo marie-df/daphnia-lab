@@ -57,7 +57,9 @@
       "deaths": 0,
       "notes": "Original stock",
       "born": "01.04.2026",
-      "neoLog": [],
+      "neoLog": [
+        "15.05.2026 00:56 — 57 neonates born"
+      ],
       "history": [
         {
           "date": "25.05.2026 00:52",
@@ -75,6 +77,16 @@
             {
               "t": "pop",
               "l": "🔬 Pop 0→11"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "date": "15.05.2026 00:56",
+          "chips": [
+            {
+              "t": "neo",
+              "l": "🦐 57 neonates born"
             }
           ],
           "note": ""
