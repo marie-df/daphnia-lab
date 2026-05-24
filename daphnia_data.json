@@ -3,17 +3,17 @@
   "algaeMax": 1000,
   "algaeHistory": [
     {
-      "date": "01.05.2026 · 08:00",
+      "date": "01.05.2026 Â· 08:00",
       "delta": 500,
       "note": "Initial stock",
       "bal": 500
     }
   ],
-  "m4Stock": 2000,
+  "m4Stock": 10000,
   "m4Max": 5000,
   "m4History": [
     {
-      "date": "01.05.2026 · 08:00",
+      "date": "01.05.2026 Â· 08:00",
       "delta": 2000,
       "note": "Initial M4",
       "bal": 2000
@@ -29,6 +29,12 @@
       "delta": -1000,
       "note": "Manual update",
       "bal": 2000
+    },
+    {
+      "date": "25.05.2026 00:50",
+      "delta": 8000,
+      "note": "Manual update",
+      "bal": 10000
     }
   ],
   "beakers": [
@@ -64,7 +70,7 @@
       "neoLog": [],
       "history": [
         {
-          "date": "10.04.2026 · 09:00",
+          "date": "10.04.2026 Â· 09:00",
           "chips": [
             {
               "t": "note",
@@ -89,11 +95,11 @@
       "notes": "Slightly turbid",
       "born": "12.04.2026",
       "neoLog": [
-        "20.04.2026 · 17:32 — 18 neonates born"
+        "20.04.2026 Â· 17:32 â 18 neonates born"
       ],
       "history": [
         {
-          "date": "12.04.2026 · 09:00",
+          "date": "12.04.2026 Â· 09:00",
           "chips": [
             {
               "t": "note",
@@ -103,11 +109,11 @@
           "note": ""
         },
         {
-          "date": "20.04.2026 · 17:32",
+          "date": "20.04.2026 Â· 17:32",
           "chips": [
             {
               "t": "neo",
-              "l": "🦐 18 neonates born"
+              "l": "ð¦ 18 neonates born"
             }
           ],
           "note": ""
@@ -130,7 +136,7 @@
       "neoLog": [],
       "history": [
         {
-          "date": "15.04.2026 · 08:00",
+          "date": "15.04.2026 Â· 08:00",
           "chips": [
             {
               "t": "note",
@@ -157,7 +163,7 @@
       "neoLog": [],
       "history": [
         {
-          "date": "18.04.2026 · 08:00",
+          "date": "18.04.2026 Â· 08:00",
           "chips": [
             {
               "t": "note",
@@ -184,7 +190,7 @@
       "neoLog": [],
       "history": [
         {
-          "date": "20.04.2026 · 08:00",
+          "date": "20.04.2026 Â· 08:00",
           "chips": [
             {
               "t": "note",
@@ -209,11 +215,11 @@
       "notes": "Best performer",
       "born": "22.04.2026",
       "neoLog": [
-        "10.05.2026 · 11:00 — 42 neonates born"
+        "10.05.2026 Â· 11:00 â 42 neonates born"
       ],
       "history": [
         {
-          "date": "22.04.2026 · 08:00",
+          "date": "22.04.2026 Â· 08:00",
           "chips": [
             {
               "t": "note",
@@ -223,11 +229,11 @@
           "note": ""
         },
         {
-          "date": "10.05.2026 · 11:00",
+          "date": "10.05.2026 Â· 11:00",
           "chips": [
             {
               "t": "neo",
-              "l": "🦐 42 neonates born"
+              "l": "ð¦ 42 neonates born"
             }
           ],
           "note": ""
@@ -268,21 +274,21 @@
   "m4Sols": [
     {
       "id": "m4s1",
-      "name": "CaCl₂·2H₂O",
+      "name": "CaClâÂ·2HâO",
       "stock": 900,
       "max": 1000,
       "needed": 18
     },
     {
       "id": "m4s2",
-      "name": "MgSO₄·7H₂O",
+      "name": "MgSOâÂ·7HâO",
       "stock": 880,
       "max": 1000,
       "needed": 12
     },
     {
       "id": "m4s3",
-      "name": "NaHCO₃",
+      "name": "NaHCOâ",
       "stock": 750,
       "max": 1000,
       "needed": 8
@@ -296,77 +302,77 @@
     },
     {
       "id": "m4s5",
-      "name": "Na₂SiO₃",
+      "name": "NaâSiOâ",
       "stock": 600,
       "max": 1000,
       "needed": 5
     },
     {
       "id": "m4s6",
-      "name": "NaNO₃",
+      "name": "NaNOâ",
       "stock": 850,
       "max": 1000,
       "needed": 10
     },
     {
       "id": "m4s7",
-      "name": "KH₂PO₄",
+      "name": "KHâPOâ",
       "stock": 700,
       "max": 1000,
       "needed": 4
     },
     {
       "id": "m4s8",
-      "name": "FeCl₃·6H₂O",
+      "name": "FeClâÂ·6HâO",
       "stock": 480,
       "max": 500,
       "needed": 2
     },
     {
       "id": "m4s9",
-      "name": "MnCl₂·4H₂O",
+      "name": "MnClâÂ·4HâO",
       "stock": 490,
       "max": 500,
       "needed": 1
     },
     {
       "id": "m4s10",
-      "name": "ZnCl₂",
+      "name": "ZnClâ",
       "stock": 195,
       "max": 200,
       "needed": 0.5
     },
     {
       "id": "m4s11",
-      "name": "CoCl₂·6H₂O",
+      "name": "CoClâÂ·6HâO",
       "stock": 198,
       "max": 200,
       "needed": 0.5
     },
     {
       "id": "m4s12",
-      "name": "CuCl₂·2H₂O",
+      "name": "CuClâÂ·2HâO",
       "stock": 197,
       "max": 200,
       "needed": 0.5
     },
     {
       "id": "m4s13",
-      "name": "Na₂MoO₄",
+      "name": "NaâMoOâ",
       "stock": 199,
       "max": 200,
       "needed": 0.5
     },
     {
       "id": "m4s14",
-      "name": "H₃BO₃",
+      "name": "HâBOâ",
       "stock": 490,
       "max": 500,
       "needed": 2
     },
     {
       "id": "m4s15",
-      "name": "Na₂EDTA",
+      "name": "NaâEDTA",
       "stock": 480,
       "max": 500,
       "needed": 3
