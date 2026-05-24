@@ -303,6 +303,33 @@
           "note": ""
         }
       ]
+    },
+    {
+      "id": "B-09",
+      "name": "B-09",
+      "parent": null,
+      "alive": true,
+      "algaeFed": 0,
+      "m4Added": 0,
+      "adults": 0,
+      "juv": 0,
+      "neosPop": 0,
+      "deaths": 0,
+      "notes": "",
+      "born": "25.05.2026 01:05",
+      "neoLog": [],
+      "history": [
+        {
+          "date": "25.05.2026 01:05",
+          "chips": [
+            {
+              "t": "note",
+              "l": "Created"
+            }
+          ],
+          "note": ""
+        }
+      ]
     }
   ],
   "algaeSols": [
