@@ -238,12 +238,12 @@
     },
     {
       "id": "B-07",
-      "name": "B-07",
+      "name": "B-00",
       "parent": null,
       "alive": true,
       "algaeFed": 0,
       "m4Added": 0,
-      "adults": 0,
+      "adults": 11,
       "juv": 0,
       "neosPop": 0,
       "deaths": 0,
@@ -257,6 +257,20 @@
             {
               "t": "note",
               "l": "Created"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "date": "29.04.2026 00:57",
+          "chips": [
+            {
+              "t": "note",
+              "l": "✏ Renamed to B-00"
+            },
+            {
+              "t": "pop",
+              "l": "🔬 Pop 0→11"
             }
           ],
           "note": ""
